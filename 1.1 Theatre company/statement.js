@@ -19,8 +19,6 @@ function renderPlainText(data) {
     return result;
 }
 
-console.log(statement(invoices[0], plays));
-
 function htmlStatement(invoice, plays) {
     return renderHtml(createStatementData(invoice, plays));
 }

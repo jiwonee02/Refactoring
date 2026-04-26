@@ -1,6 +1,12 @@
 import plays from "./plays.json" with { type: "json" };
 import invoices from "./invoices.json" with { type: "json" };
 
+class PerformanceCalculator {
+    constructor(aPerformance) {
+        this.performance = aPerformance;
+    }
+}
+
 export default function createStatementData(invoice, plays) {
     const result = {};
     result.customer = invoice.customer;
@@ -11,6 +17,7 @@ export default function createStatementData(invoice, plays) {
     return result;
 
     function enrichPerformance(aPerformance) {
+        const calculator = new PerformanceCalculator(aPerformance);
         const result = Object.assign({}, aPerformance);
         result.play = playFor(result);
         result.amount = amountFor(result);
@@ -56,7 +63,7 @@ export default function createStatementData(invoice, plays) {
         return volumeCredits;
     }
 
-    function totalAmount() {
+    function totalAmount(data) {
         return data.performances.reduce((total, p) => total + p.amount, 0);
     }
 
