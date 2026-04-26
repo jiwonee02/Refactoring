@@ -2,8 +2,9 @@ import plays from "./plays.json" with { type: "json" };
 import invoices from "./invoices.json" with { type: "json" };
 
 class PerformanceCalculator {
-    constructor(aPerformance) {
+    constructor(aPerformance, aPlay) {
         this.performance = aPerformance;
+        this.play = aPlay;
     }
 }
 
@@ -17,7 +18,10 @@ export default function createStatementData(invoice, plays) {
     return result;
 
     function enrichPerformance(aPerformance) {
-        const calculator = new PerformanceCalculator(aPerformance);
+        const calculator = new PerformanceCalculator(
+            aPerformance,
+            playFor(aPerformance),
+        );
         const result = Object.assign({}, aPerformance);
         result.play = playFor(result);
         result.amount = amountFor(result);
